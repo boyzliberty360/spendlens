@@ -1,0 +1,97 @@
+{
+  "name": "spendlens-vscode",
+  "displayName": "SpendLens",
+  "description": "Real-time token count and cost estimation for AI prompts",
+  "version": "0.0.1",
+  "publisher": "spendlens",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/boyzliberty360/spendlens"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other",
+    "Machine Learning"
+  ],
+  "keywords": [
+    "tokens",
+    "llm",
+    "ai",
+    "cost",
+    "copilot",
+    "claude",
+    "chatgpt"
+  ],
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "spendlens",
+          "title": "SpendLens",
+          "icon": "$(symbol-keyword)"
+        }
+      ]
+    },
+    "views": {
+      "spendlens": [
+        {
+          "type": "webview",
+          "id": "spendlens.promptPanel",
+          "name": "Prompt Estimator"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "spendlens.openPanel",
+        "title": "SpendLens: Open Panel"
+      },
+      {
+        "command": "spendlens.switchModel",
+        "title": "SpendLens: Switch Model"
+      }
+    ],
+    "configuration": {
+      "title": "SpendLens",
+      "properties": {
+        "spendlens.defaultModel": {
+          "type": "string",
+          "default": "claude-sonnet-4",
+          "description": "Default model for token estimation"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "npm run check-types && npm run lint && node esbuild.js",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "package": "npm run check-types && npm run lint && node esbuild.js --production",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "dependencies": {
+    "spendlens": "latest"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^8.25.0",
+    "@typescript-eslint/parser": "^8.25.0",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1",
+    "esbuild": "^0.25.0",
+    "eslint": "^9.21.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.57.0"
+  }
+}
