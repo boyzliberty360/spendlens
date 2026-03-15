@@ -1,0 +1,51 @@
+{
+  "name": "@tokenlens/react",
+  "version": "1.0.0",
+  "description": "React hooks for TokenLens — real-time token counting in your components.",
+  "keywords": [
+    "tokenlens",
+    "react",
+    "hooks",
+    "tokens",
+    "llm",
+    "cost",
+    "openai",
+    "anthropic"
+  ],
+  "author": "Orion",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/boyzliberty360/tokenlens"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch"
+  },
+  "peerDependencies": {
+    "react": ">=17.0.0"
+  },
+  "dependencies": {
+    "tokenlens": "*"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.28",
+    "tsup": "^8.0.0",
+    "typescript": "^5.4.0"
+  }
+}

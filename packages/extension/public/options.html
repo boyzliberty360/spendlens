@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TokenLens — Settings</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 14px;
+      color: #1a1a1a;
+      background: #f9f9f7;
+      padding: 32px;
+      max-width: 520px;
+    }
+    @media (prefers-color-scheme: dark) {
+      body { background: #111; color: #e0e0e0; }
+      .card { background: #1e1e1e; border-color: rgba(255,255,255,0.08); }
+      input, select, textarea { background: #2a2a2a; border-color: rgba(255,255,255,0.12); color: #e0e0e0; }
+    }
+    h1 { font-size: 20px; font-weight: 600; margin-bottom: 6px; }
+    .subtitle { opacity: 0.5; font-size: 13px; margin-bottom: 24px; }
+    .card {
+      background: #fff;
+      border: 0.5px solid rgba(0,0,0,0.1);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .field { margin-bottom: 16px; }
+    .field:last-child { margin-bottom: 0; }
+    label { display: block; font-size: 12px; font-weight: 500; opacity: 0.6; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.04em; }
+    input[type="text"], select, textarea {
+      width: 100%; padding: 9px 12px;
+      border: 0.5px solid rgba(0,0,0,0.15);
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+    }
+    input[type="text"]:focus, select:focus, textarea:focus {
+      border-color: rgba(0,0,0,0.3);
+    }
+    textarea { resize: vertical; min-height: 80px; }
+    .toggle-row {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .toggle-label { font-size: 14px; font-weight: 500; }
+    .toggle-desc { font-size: 12px; opacity: 0.5; margin-top: 2px; }
+    .toggle { position: relative; width: 36px; height: 20px; }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.15);
+      border-radius: 999px;
+      transition: background 0.2s;
+      cursor: pointer;
+    }
+    .toggle input:checked + .toggle-slider { background: #22c55e; }
+    .toggle-slider::after {
+      content: '';
+      position: absolute;
+      left: 2px; top: 2px;
+      width: 16px; height: 16px;
+      background: #fff;
+      border-radius: 50%;
+      transition: transform 0.2s;
+    }
+    .toggle input:checked + .toggle-slider::after { transform: translateX(16px); }
+    .save-row { display: flex; align-items: center; gap: 12px; }
+    button {
+      padding: 10px 20px;
+      background: #1a1a1a;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    @media (prefers-color-scheme: dark) {
+      button { background: #e0e0e0; color: #111; }
+    }
+    #save-status { font-size: 13px; color: #22c55e; }
+  </style>
+</head>
+<body>
+  <h1>TokenLens</h1>
+  <p class="subtitle">Token counter &amp; cost estimator for AI prompts</p>
+
+  <div class="card">
+    <div class="field">
+      <div class="toggle-row">
+        <div>
+          <div class="toggle-label">Enable TokenLens</div>
+          <div class="toggle-desc">Show counter on supported AI sites</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="enabled" checked />
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="field">
+      <label for="model">Default model</label>
+      <select id="model">
+        <!-- Populated by options.js -->
+      </select>
+    </div>
+    <div class="field">
+      <label for="theme">Widget theme</label>
+      <select id="theme">
+        <option value="auto">Auto (follow system)</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="field">
+      <label for="custom-sites">Custom sites (one hostname per line)</label>
+      <textarea id="custom-sites" placeholder="example.com&#10;app.mycompany.com"></textarea>
+      <p style="font-size:11px;opacity:0.4;margin-top:6px;">
+        TokenLens will look for &lt;textarea&gt; or contenteditable elements on these sites.
+      </p>
+    </div>
+  </div>
+
+  <div class="save-row">
+    <button id="save-btn">Save settings</button>
+    <span id="save-status"></span>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>

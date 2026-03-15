@@ -1,0 +1,36 @@
+{
+  "name": "tokenlens",
+  "version": "1.0.0",
+  "description": "Real-time token counting and cost estimation for LLM prompts — before you hit send.",
+  "keywords": [
+    "tokens", "llm", "openai", "anthropic", "claude", "gpt",
+    "cost", "estimation", "prompt", "tokenizer"
+  ],
+  "author": "Orion",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/boyzliberty360/tokenlens"
+  },
+  "homepage": "https://github.com/boyzliberty360/tokenlens#readme",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": ["dist", "README.md", "LICENSE"],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "node --experimental-strip-types --test src/__tests__/index.test.ts"
+  },
+  "devDependencies": {
+    "tsup": "^8.0.0",
+    "typescript": "^5.4.0"
+  }
+}

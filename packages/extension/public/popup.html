@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TokenLens</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      width: 280px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 13px;
+      background: #fff;
+      color: #1a1a1a;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      body { background: #1a1a1a; color: #e0e0e0; }
+      .divider { border-color: rgba(255,255,255,0.08); }
+      .stat-card { background: rgba(255,255,255,0.05); }
+      .footer { border-color: rgba(255,255,255,0.08); }
+      .site-tag { background: rgba(255,255,255,0.07); color: #a0a0a0; }
+      select {
+        background: #2a2a2a;
+        border-color: rgba(255,255,255,0.12);
+        color: #e0e0e0;
+      }
+    }
+
+    .header {
+      padding: 14px 16px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .logo-icon {
+      width: 20px;
+      height: 20px;
+      background: #1a1a1a;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .logo-icon { background: #e0e0e0; }
+      .logo-icon svg { color: #1a1a1a; }
+    }
+
+    .logo-icon svg { color: #fff; }
+
+    .toggle-wrap {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      opacity: 0.6;
+    }
+
+    .toggle { position: relative; width: 32px; height: 18px; }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.15);
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .toggle input:checked + .toggle-slider { background: #22c55e; }
+    .toggle-slider::after {
+      content: '';
+      position: absolute;
+      left: 2px; top: 2px;
+      width: 14px; height: 14px;
+      background: #fff;
+      border-radius: 50%;
+      transition: transform 0.2s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+    .toggle input:checked + .toggle-slider::after { transform: translateX(14px); }
+
+    .divider { border: none; border-top: 0.5px solid rgba(0,0,0,0.08); }
+
+    .section { padding: 12px 16px; }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      opacity: 0.4;
+      margin-bottom: 8px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .stat-card {
+      background: rgba(0,0,0,0.03);
+      border-radius: 8px;
+      padding: 8px 10px;
+    }
+
+    .stat-label { font-size: 10px; opacity: 0.5; margin-bottom: 2px; }
+    .stat-val {
+      font-size: 17px;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.02em;
+    }
+
+    .ctx-wrap { margin-top: 2px; }
+    .ctx-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      opacity: 0.5;
+      margin-bottom: 4px;
+    }
+    .ctx-track {
+      height: 3px;
+      background: rgba(0,0,0,0.08);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    @media (prefers-color-scheme: dark) {
+      .ctx-track { background: rgba(255,255,255,0.08); }
+    }
+    .ctx-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 99px;
+      background: #22c55e;
+      transition: width 0.3s, background 0.3s;
+    }
+
+    .model-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    select {
+      flex: 1;
+      padding: 6px 8px;
+      border: 0.5px solid rgba(0,0,0,0.12);
+      border-radius: 7px;
+      font-size: 12px;
+      font-family: inherit;
+      outline: none;
+      cursor: pointer;
+      background: #fff;
+      color: #1a1a1a;
+    }
+
+    .site-status {
+      margin-top: 8px;
+    }
+
+    .site-tag {
+      display: inline-block;
+      padding: 3px 8px;
+      background: rgba(0,0,0,0.05);
+      border-radius: 99px;
+      font-size: 11px;
+      color: #666;
+    }
+
+    .not-active {
+      font-size: 12px;
+      opacity: 0.4;
+      font-style: italic;
+    }
+
+    .footer {
+      padding: 10px 16px;
+      border-top: 0.5px solid rgba(0,0,0,0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer a {
+      font-size: 11px;
+      opacity: 0.4;
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+    }
+    .footer a:hover { opacity: 0.7; }
+    .version { font-size: 10px; opacity: 0.3; }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="logo">
+      <div class="logo-icon">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="1" y="3" width="10" height="1.5" rx="0.75" fill="currentColor"/>
+          <rect x="1" y="5.5" width="7" height="1.5" rx="0.75" fill="currentColor"/>
+          <rect x="1" y="8" width="8.5" height="1.5" rx="0.75" fill="currentColor"/>
+        </svg>
+      </div>
+      TokenLens
+    </div>
+    <div class="toggle-wrap">
+      <span id="toggle-label">On</span>
+      <label class="toggle">
+        <input type="checkbox" id="enabled-toggle" checked />
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <div class="section">
+    <div class="section-label">Current page</div>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Tokens</div>
+        <div class="stat-val" id="popup-tokens">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Est. cost</div>
+        <div class="stat-val" id="popup-cost">—</div>
+      </div>
+    </div>
+    <div class="ctx-wrap">
+      <div class="ctx-header">
+        <span>Context window</span>
+        <span id="popup-ctx-pct">—</span>
+      </div>
+      <div class="ctx-track">
+        <div class="ctx-fill" id="popup-ctx-bar"></div>
+      </div>
+    </div>
+    <div class="site-status" id="site-status">
+      <span class="not-active">No active prompt detected</span>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <div class="section">
+    <div class="section-label">Model</div>
+    <div class="model-row">
+      <select id="model-select"></select>
+    </div>
+  </div>
+
+  <div class="footer">
+    <a id="open-options">Settings</a>
+    <span class="version">v1.0.0</span>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

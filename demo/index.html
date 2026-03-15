@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TokenLens — Live Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/tokenlens/dist/tokenlens.umd.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #0f0f0f;
+      --surface: #161616;
+      --border:  rgba(255,255,255,0.07);
+      --text:    #e8e8e8;
+      --muted:   #666;
+      --accent:  #22c55e;
+      --warn:    #f59e0b;
+      --danger:  #ef4444;
+      --mono:    'JetBrains Mono', monospace;
+      --sans:    'Inter', system-ui, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px 80px;
+    }
+
+    /* ── Header ────────────────────────────────────────────────────── */
+    .header {
+      text-align: center;
+      margin-bottom: 48px;
+      max-width: 600px;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .logo-mark {
+      width: 28px; height: 28px;
+      background: var(--text);
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-mark svg { color: var(--bg); }
+
+    h1 {
+      font-size: clamp(28px, 5vw, 44px);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      margin-bottom: 14px;
+      line-height: 1.15;
+    }
+
+    .tagline {
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .tagline strong { color: var(--text); font-weight: 500; }
+
+    /* ── Card ──────────────────────────────────────────────────────── */
+    .card {
+      width: 100%;
+      max-width: 680px;
+      background: var(--surface);
+      border: 0.5px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .card-header {
+      padding: 14px 20px;
+      border-bottom: 0.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-title {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .model-select {
+      appearance: none;
+      background: rgba(255,255,255,0.05);
+      border: 0.5px solid var(--border);
+      border-radius: 7px;
+      padding: 5px 28px 5px 10px;
+      font-size: 12px;
+      font-family: var(--sans);
+      color: var(--text);
+      cursor: pointer;
+      outline: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23666'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 9px center;
+    }
+
+    .model-select:hover { border-color: rgba(255,255,255,0.15); }
+    .model-select:focus { border-color: rgba(255,255,255,0.25); }
+
+    /* ── Textarea ──────────────────────────────────────────────────── */
+    textarea {
+      width: 100%;
+      background: transparent;
+      border: none;
+      resize: none;
+      padding: 20px;
+      font-family: var(--mono);
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text);
+      outline: none;
+      min-height: 180px;
+      display: block;
+    }
+
+    textarea::placeholder { color: #333; }
+
+    /* ── Stats bar ─────────────────────────────────────────────────── */
+    .stats-bar {
+      padding: 14px 20px;
+      border-top: 0.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    .stat {
+      flex: 1;
+      text-align: center;
+      padding: 0 12px;
+      border-right: 0.5px solid var(--border);
+    }
+    .stat:last-child { border-right: none; }
+
+    .stat-label {
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .stat-value {
+      font-family: var(--mono);
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      transition: color 0.2s;
+    }
+
+    /* ── Context bar ───────────────────────────────────────────────── */
+    .ctx-card { padding: 16px 20px; }
+
+    .ctx-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 10px;
+    }
+
+    .ctx-label { font-size: 12px; color: var(--muted); }
+    .ctx-numbers { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+
+    .ctx-track {
+      height: 4px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 99px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .ctx-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 99px;
+      background: var(--accent);
+      transition: width 0.25s cubic-bezier(0.4,0,0.2,1), background 0.25s;
+    }
+
+    .ctx-legend {
+      display: flex;
+      gap: 16px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .legend-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+    }
+
+    /* ── Model breakdown ───────────────────────────────────────────── */
+    .model-card { padding: 0; }
+
+    .model-row {
+      display: flex;
+      align-items: center;
+      padding: 11px 20px;
+      border-bottom: 0.5px solid var(--border);
+      gap: 12px;
+      cursor: pointer;
+      transition: background 0.1s;
+    }
+
+    .model-row:last-child { border-bottom: none; }
+    .model-row:hover { background: rgba(255,255,255,0.02); }
+    .model-row.active { background: rgba(34,197,94,0.06); }
+
+    .model-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--border);
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+    .model-row.active .model-dot { background: var(--accent); }
+
+    .model-name { font-size: 13px; flex: 1; }
+
+    .model-provider {
+      font-size: 11px;
+      color: var(--muted);
+      width: 72px;
+    }
+
+    .model-cost {
+      font-family: var(--mono);
+      font-size: 13px;
+      min-width: 80px;
+      text-align: right;
+      transition: color 0.2s;
+    }
+
+    .model-ctx {
+      font-size: 11px;
+      color: var(--muted);
+      min-width: 44px;
+      text-align: right;
+    }
+
+    /* ── Install bar ───────────────────────────────────────────────── */
+    .install-bar {
+      width: 100%;
+      max-width: 680px;
+      display: flex;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .install-btn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 20px;
+      background: var(--surface);
+      border: 0.5px solid var(--border);
+      border-radius: 10px;
+      font-size: 13px;
+      font-family: var(--sans);
+      color: var(--text);
+      text-decoration: none;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .install-btn:hover {
+      border-color: rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .install-btn code {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--accent);
+    }
+
+    /* ── Warning flash ─────────────────────────────────────────────── */
+    .warning-flash {
+      width: 100%;
+      max-width: 680px;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      display: none;
+      margin-bottom: 8px;
+    }
+
+    .warning-flash.warn {
+      display: block;
+      background: rgba(245,158,11,0.08);
+      border: 0.5px solid rgba(245,158,11,0.25);
+      color: var(--warn);
+    }
+
+    .warning-flash.danger {
+      display: block;
+      background: rgba(239,68,68,0.08);
+      border: 0.5px solid rgba(239,68,68,0.25);
+      color: var(--danger);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="logo">
+      <div class="logo-mark">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <rect x="1" y="3.5" width="12" height="1.75" rx="0.875" fill="currentColor"/>
+          <rect x="1" y="6.5" width="8.5" height="1.75" rx="0.875" fill="currentColor"/>
+          <rect x="1" y="9.5" width="10" height="1.75" rx="0.875" fill="currentColor"/>
+        </svg>
+      </div>
+      TokenLens
+    </div>
+    <h1>Know the cost<br />before you send.</h1>
+    <p class="tagline">
+      Real-time <strong>token counting</strong> and <strong>cost estimation</strong>
+      for every major LLM — as an npm package, React hooks library,
+      and browser extension.
+    </p>
+  </div>
+
+  <!-- Main editor card -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">Try it</span>
+      <select class="model-select" id="model-select">
+        <optgroup label="Anthropic">
+          <option value="claude-sonnet-4">Claude Sonnet 4</option>
+          <option value="claude-opus-4">Claude Opus 4</option>
+          <option value="claude-haiku-4">Claude Haiku 4</option>
+        </optgroup>
+        <optgroup label="OpenAI">
+          <option value="gpt-4o">GPT-4o</option>
+          <option value="gpt-4o-mini">GPT-4o mini</option>
+          <option value="o1">o1</option>
+          <option value="o3-mini">o3-mini</option>
+        </optgroup>
+        <optgroup label="Google">
+          <option value="gemini-1.5-pro">Gemini 1.5 Pro</option>
+          <option value="gemini-2.0-flash">Gemini 2.0 Flash</option>
+        </optgroup>
+      </select>
+    </div>
+    <textarea
+      id="prompt-input"
+      placeholder="Paste or type your prompt here…"
+      spellcheck="false"
+    ></textarea>
+    <div class="stats-bar">
+      <div class="stat">
+        <div class="stat-label">Tokens</div>
+        <div class="stat-value" id="s-tokens">0</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Est. cost</div>
+        <div class="stat-value" id="s-cost">$0.00</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Words</div>
+        <div class="stat-value" id="s-words">0</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Chars</div>
+        <div class="stat-value" id="s-chars">0</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Context window card -->
+  <div class="card">
+    <div class="ctx-card">
+      <div class="ctx-header">
+        <span class="ctx-label">Context window usage</span>
+        <span class="ctx-numbers" id="ctx-numbers">0 / 200,000 tokens</span>
+      </div>
+      <div class="ctx-track">
+        <div class="ctx-fill" id="ctx-fill"></div>
+      </div>
+      <div class="ctx-legend">
+        <div class="legend-item">
+          <div class="legend-dot" style="background: var(--accent)"></div>
+          <span>Safe (&lt; 60%)</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot" style="background: var(--warn)"></div>
+          <span>Warning (60–90%)</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot" style="background: var(--danger)"></div>
+          <span>Danger (&gt; 90%)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Warning flash -->
+  <div class="warning-flash" id="warning-flash"></div>
+
+  <!-- Model cost comparison card -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">Cost across models</span>
+    </div>
+    <div class="model-card" id="model-table"></div>
+  </div>
+
+  <!-- Install buttons -->
+  <div class="install-bar">
+    <a class="install-btn" href="https://www.npmjs.com/package/tokenlens" target="_blank">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <rect x="1" y="1" width="12" height="12" rx="2" fill="#CB3837"/>
+        <rect x="3" y="3" width="8" height="8" fill="white"/>
+        <rect x="3" y="3" width="3" height="8" fill="#CB3837"/>
+        <rect x="8" y="3" width="3" height="5" fill="#CB3837"/>
+      </svg>
+      <code>npm i tokenlens</code>
+    </a>
+    <a class="install-btn" href="https://www.npmjs.com/package/@tokenlens/react" target="_blank">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <circle cx="7" cy="7" r="2" fill="#61DAFB"/>
+        <ellipse cx="7" cy="7" rx="6" ry="2.4" stroke="#61DAFB" stroke-width="1" fill="none"/>
+        <ellipse cx="7" cy="7" rx="6" ry="2.4" stroke="#61DAFB" stroke-width="1" fill="none" transform="rotate(60 7 7)"/>
+        <ellipse cx="7" cy="7" rx="6" ry="2.4" stroke="#61DAFB" stroke-width="1" fill="none" transform="rotate(120 7 7)"/>
+      </svg>
+      <code>npm i @tokenlens/react</code>
+    </a>
+    <a class="install-btn" href="https://github.com/YOUR_USERNAME/tokenlens" target="_blank">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M7 0.5C3.41 0.5 0.5 3.41 0.5 7c0 2.87 1.86 5.3 4.44 6.16.32.06.44-.14.44-.31v-1.09c-1.8.39-2.18-.87-2.18-.87-.3-.75-.72-.95-.72-.95-.59-.4.04-.39.04-.39.65.05 1 .67 1 .67.58 1 1.52.71 1.89.54.06-.42.23-.71.41-.87-1.44-.16-2.95-.72-2.95-3.2 0-.71.25-1.28.67-1.74-.07-.16-.29-.82.06-1.71 0 0 .55-.17 1.8.67A6.24 6.24 0 017 3.9c.56 0 1.12.08 1.64.23 1.25-.84 1.8-.67 1.8-.67.35.89.13 1.55.06 1.71.42.46.67 1.03.67 1.74 0 2.49-1.52 3.04-2.96 3.2.23.2.44.59.44 1.19v1.76c0 .17.12.37.44.31A6.51 6.51 0 0013.5 7C13.5 3.41 10.59.5 7 .5z" fill="currentColor"/>
+      </svg>
+      GitHub
+    </a>
+  </div>
+
+  <script>
+    const { getStats, formatCost, getContextSeverity, MODELS } = TokenLens;
+
+    const modelOrder = [
+      "claude-sonnet-4", "claude-opus-4", "claude-haiku-4",
+      "gpt-4o", "gpt-4o-mini", "o1", "o3-mini",
+      "gemini-1.5-pro", "gemini-1.5-flash", "gemini-2.0-flash",
+      "llama-3.1-8b", "llama-3.1-70b",
+    ];
+
+    let currentModel = "claude-sonnet-4";
+
+    // ── Build model comparison table ──────────────────────────────────
+    const table = document.getElementById("model-table");
+    modelOrder.forEach(id => {
+      const m = MODELS[id];
+      if (!m) return;
+      const row = document.createElement("div");
+      row.className = "model-row" + (id === currentModel ? " active" : "");
+      row.dataset.model = id;
+      row.innerHTML = `
+        <div class="model-dot"></div>
+        <div class="model-name">${m.label}</div>
+        <div class="model-provider">${m.provider}</div>
+        <div class="model-cost" id="mcost-${id}">—</div>
+        <div class="model-ctx">${(m.contextWindow / 1000).toFixed(0)}K</div>
+      `;
+      row.addEventListener("click", () => {
+        currentModel = id;
+        document.getElementById("model-select").value = id;
+        update(document.getElementById("prompt-input").value);
+      });
+      table.appendChild(row);
+    });
+
+    // ── Core update function ──────────────────────────────────────────
+    function update(text) {
+      const stats = getStats(text, { model: currentModel });
+      const model = MODELS[currentModel];
+      const severity = getContextSeverity(stats.contextUsage);
+
+      // Stats bar
+      document.getElementById("s-tokens").textContent = stats.tokens.toLocaleString();
+      document.getElementById("s-cost").textContent = formatCost(stats.inputCost);
+      document.getElementById("s-words").textContent = stats.words.toLocaleString();
+      document.getElementById("s-chars").textContent = stats.chars.toLocaleString();
+
+      // Context bar
+      const pct = Math.min(stats.contextUsage * 100, 100);
+      const fill = document.getElementById("ctx-fill");
+      fill.style.width = pct.toFixed(2) + "%";
+      fill.style.background =
+        severity === "danger" ? "var(--danger)" :
+        severity === "warning" ? "var(--warn)" : "var(--accent)";
+      document.getElementById("ctx-numbers").textContent =
+        `${stats.tokens.toLocaleString()} / ${model.contextWindow.toLocaleString()} tokens`;
+
+      // Warning flash
+      const flash = document.getElementById("warning-flash");
+      if (severity === "danger") {
+        flash.className = "warning-flash danger";
+        flash.textContent = `⚠ Over 90% of context window used — ${stats.tokensRemaining.toLocaleString()} tokens remaining`;
+      } else if (severity === "warning") {
+        flash.className = "warning-flash warn";
+        flash.textContent = `Context window is ${pct.toFixed(1)}% full — ${stats.tokensRemaining.toLocaleString()} tokens remaining`;
+      } else {
+        flash.className = "warning-flash";
+      }
+
+      // Model cost comparison table
+      document.querySelectorAll(".model-row").forEach(row => {
+        const id = row.dataset.model;
+        row.classList.toggle("active", id === currentModel);
+        const costEl = document.getElementById("mcost-" + id);
+        if (costEl) {
+          if (text.trim().length === 0) {
+            costEl.textContent = "—";
+            costEl.style.color = "";
+          } else {
+            const s = getStats(text, { model: id });
+            costEl.textContent = formatCost(s.inputCost);
+            // Colour: cheapest = green, most expensive = red
+            costEl.style.color = "";
+          }
+        }
+      });
+
+      // Color-rank the costs — cheapest green, most expensive red
+      if (text.trim().length > 0) {
+        const costs = modelOrder.map(id => ({
+          id,
+          cost: getStats(text, { model: id }).inputCost
+        }));
+        const min = Math.min(...costs.map(c => c.cost));
+        const max = Math.max(...costs.map(c => c.cost));
+        costs.forEach(({ id, cost }) => {
+          const el = document.getElementById("mcost-" + id);
+          if (!el) return;
+          if (max === min) { el.style.color = ""; return; }
+          const ratio = (cost - min) / (max - min);
+          if (ratio < 0.25) el.style.color = "var(--accent)";
+          else if (ratio < 0.65) el.style.color = "";
+          else el.style.color = "var(--danger)";
+        });
+      }
+    }
+
+    // ── Wire events ───────────────────────────────────────────────────
+    document.getElementById("prompt-input").addEventListener("input", e => {
+      update(e.target.value);
+    });
+
+    document.getElementById("model-select").addEventListener("change", e => {
+      currentModel = e.target.value;
+      update(document.getElementById("prompt-input").value);
+    });
+
+    // Initial render
+    update("");
+  </script>
+</body>
+</html>
