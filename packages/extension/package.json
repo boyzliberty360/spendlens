@@ -1,5 +1,5 @@
 {
-  "name": "tokenlens-extension",
+  "name": "spendlens-extension",
   "version": "1.0.0",
   "private": true,
   "description": "TokenLens browser extension — see token cost before you send",
@@ -8,7 +8,7 @@
     "dev": "tsup --watch"
   },
   "dependencies": {
-    "tokenlens": "*"
+    "spendlens": "*"
   },
   "devDependencies": {
     "@types/chrome": "^0.1.37",

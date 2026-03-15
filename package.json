@@ -1,5 +1,5 @@
 {
-  "name": "tokenlens-monorepo",
+  "name": "spendlens-monorepo",
   "private": true,
   "workspaces": ["packages/*"],
   "scripts": {

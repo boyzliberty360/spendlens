@@ -17,7 +17,7 @@ import {
   type TokenStats,
   type TokenLensOptions,
   type ModelConfig,
-} from "tokenlens";
+} from "spendlens";
 
 export type { TokenStats, TokenLensOptions, ModelConfig };
 export { MODELS, formatCost, getContextSeverity };

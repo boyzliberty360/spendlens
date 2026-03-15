@@ -1,9 +1,9 @@
 {
-  "name": "@tokenlens/react",
+  "name": "spendlens-react",
   "version": "1.0.0",
   "description": "React hooks for TokenLens — real-time token counting in your components.",
   "keywords": [
-    "tokenlens",
+    "spendlens",
     "react",
     "hooks",
     "tokens",
@@ -16,7 +16,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/boyzliberty360/tokenlens"
+    "url": "https://github.com/boyzliberty360/spendlens"
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -41,7 +41,7 @@
     "react": ">=17.0.0"
   },
   "dependencies": {
-    "tokenlens": "*"
+    "spendlens": "file:../core"
   },
   "devDependencies": {
     "@types/react": "^18.3.28",

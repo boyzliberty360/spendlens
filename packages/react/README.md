@@ -1,12 +1,12 @@
-# @tokenlens/react
+# @spendlens/react
 
-React hooks and components for [TokenLens](https://github.com/boyzliberty360/tokenlens) — real-time token counting and cost estimation, built for React apps.
+React hooks and components for [TokenLens](https://github.com/boyzliberty360/spendlens) — real-time token counting and cost estimation, built for React apps.
 
-[![npm](https://img.shields.io/npm/v/@tokenlens/react)](https://www.npmjs.com/package/@tokenlens/react)
-[![license](https://img.shields.io/github/license/boyzliberty360/tokenlens)](../../LICENSE)
+[![npm](https://img.shields.io/npm/v/@spendlens/react)](https://www.npmjs.com/package/@spendlens/react)
+[![license](https://img.shields.io/github/license/boyzliberty360/spendlens)](../../LICENSE)
 
 ```bash
-npm install @tokenlens/react
+npm install @spendlens/react
 ```
 
 ---
@@ -14,7 +14,7 @@ npm install @tokenlens/react
 ## Quickstart
 
 ```tsx
-import { useTokenLens } from "@tokenlens/react";
+import { useTokenLens } from "@spendlens/react";
 
 function PromptBox() {
   const [text, setText] = useState("");
@@ -157,7 +157,7 @@ Renders: `847 tokens  ·  $0.000025  ·  ▓░░░░░  0.42%`
 Set a default model for all hooks in the tree — no need to pass `model` to every hook.
 
 ```tsx
-import { TokenLensProvider } from "@tokenlens/react";
+import { TokenLensProvider } from "@spendlens/react";
 
 function App() {
   return (
@@ -203,7 +203,7 @@ const stats = useTokenLens(text, {
 
 ```tsx
 import { useState } from "react";
-import { useTokenLens, useModelList, TokenCounter } from "@tokenlens/react";
+import { useTokenLens, useModelList, TokenCounter } from "@spendlens/react";
 
 export function PromptEditor() {
   const [text, setText] = useState("");

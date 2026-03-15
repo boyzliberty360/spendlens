@@ -12,7 +12,7 @@ export default defineConfig([
   },
   // UMD browser bundle (CDN, extensions, plain <script> tags)
   {
-    entry: { "tokenlens.umd": "src/index.ts" },
+    entry: { "spendlens.umd": "src/index.ts" },
     format: ["iife"],
     globalName: "TokenLens",
     minify: true,

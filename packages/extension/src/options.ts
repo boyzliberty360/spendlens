@@ -1,4 +1,4 @@
-import { MODELS } from "tokenlens";
+import { MODELS } from "spendlens";
 
 // Populate model dropdown
 const modelSelect = document.getElementById("model") as HTMLSelectElement;

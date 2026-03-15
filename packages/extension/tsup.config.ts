@@ -12,7 +12,7 @@ export default defineConfig({
   clean: true,
   sourcemap: false,
   minify: true,
-  noExternal: ["tokenlens"],
+  noExternal: ["spendlens"],
   outExtension: () => ({ js: ".js" }),
   esbuildOptions(opts) {
     // Prevent tsup from appending ".global" to IIFE output filenames

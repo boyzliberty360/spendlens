@@ -21,7 +21,7 @@ jobs:
         run: npm run build -w packages/core
       - name: Test core (47 unit tests)
         run: npm run test -w packages/core
-      - name: Build @tokenlens/react
+      - name: Build @spendlens/react
         run: npm run build -w packages/react
       - name: Build extension
         run: npm run build -w packages/extension
@@ -30,7 +30,7 @@ jobs:
       - name: Upload extension artifact
         uses: actions/upload-artifact@v4
         with:
-          name: tokenlens-extension-${{ github.sha }}
+          name: spendlens-extension-${{ github.sha }}
           path: packages/extension/dist/
 
   publish-npm:
@@ -50,11 +50,11 @@ jobs:
       - run: npm ci
       - run: npm run build -w packages/core
       - run: npm run build -w packages/react
-      - name: Publish tokenlens
+      - name: Publish spendlens
         run: npm publish --workspace packages/core --access public --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: Publish @tokenlens/react
+      - name: Publish @spendlens/react
         run: npm publish --workspace packages/react --access public --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -75,20 +75,20 @@ jobs:
       - run: npm run build -w packages/core
       - run: npm run build -w packages/extension
       - run: node packages/extension/scripts/copy-assets.mjs
-      - run: zip -r tokenlens-extension.zip packages/extension/dist/
+      - run: zip -r spendlens-extension.zip packages/extension/dist/
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: tokenlens-extension.zip
+          files: spendlens-extension.zip
           generate_release_notes: true
           body: |
             ## Installation
 
             **npm**
             ```bash
-            npm install tokenlens
-            npm install @tokenlens/react
+            npm install spendlens
+            npm install @spendlens/react
             ```
 
             **Browser Extension**
-            Download `tokenlens-extension.zip`, unzip, load as unpacked extension in Chrome or Firefox.
+            Download `spendlens-extension.zip`, unzip, load as unpacked extension in Chrome or Firefox.

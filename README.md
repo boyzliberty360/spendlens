@@ -4,10 +4,10 @@
 
 Real-time token counting and cost estimation for LLM prompts — as an npm package, React hooks library, and browser extension that works on Claude, ChatGPT, Gemini, and any site you configure.
 
-[![npm](https://img.shields.io/npm/v/tokenlens)](https://www.npmjs.com/package/tokenlens)
-[![npm downloads](https://img.shields.io/npm/dm/tokenlens)](https://www.npmjs.com/package/tokenlens)
-[![CI](https://github.com/boyzliberty360/tokenlens/actions/workflows/ci.yml/badge.svg)](https://github.com/boyzliberty360/tokenlens/actions)
-[![license](https://img.shields.io/github/license/boyzliberty360/tokenlens)](LICENSE)
+[![npm](https://img.shields.io/npm/v/spendlens)](https://www.npmjs.com/package/spendlens)
+[![npm downloads](https://img.shields.io/npm/dm/spendlens)](https://www.npmjs.com/package/spendlens)
+[![CI](https://github.com/boyzliberty360/spendlens/actions/workflows/ci.yml/badge.svg)](https://github.com/boyzliberty360/spendlens/actions)
+[![license](https://img.shields.io/github/license/boyzliberty360/spendlens)](LICENSE)
 
 ---
 
@@ -15,22 +15,22 @@ Real-time token counting and cost estimation for LLM prompts — as an npm packa
 
 | Package | Description | Install |
 |---|---|---|
-| [`tokenlens`](packages/core) | Core library — works anywhere JS runs | `npm i tokenlens` |
-| [`@tokenlens/react`](packages/react) | React hooks + drop-in component | `npm i @tokenlens/react` |
+| [`spendlens`](packages/core) | Core library — works anywhere JS runs | `npm i spendlens` |
+| [`@spendlens/react`](packages/react) | React hooks + drop-in component | `npm i @spendlens/react` |
 | [Browser extension](packages/extension) | Floating counter on AI sites | [Download →](#browser-extension) |
 
 ---
 
-## Core (`tokenlens`)
+## Core (`spendlens`)
 
 ```bash
-npm install tokenlens
+npm install spendlens
 ```
 
 ### Quickstart
 
 ```ts
-import { getStats, formatCost } from "tokenlens";
+import { getStats, formatCost } from "spendlens";
 
 const stats = getStats("Write me a poem about the sea.", {
   model: "claude-sonnet-4",
@@ -45,7 +45,7 @@ console.log(stats.withinLimit);      // true
 ### Live watcher
 
 ```ts
-import { createWatcher, formatCost } from "tokenlens";
+import { createWatcher, formatCost } from "spendlens";
 
 const watcher = createWatcher({ model: "gpt-4o" });
 
@@ -59,7 +59,7 @@ textarea.addEventListener("input", (e) => {
 ### CDN / plain HTML
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/tokenlens/dist/tokenlens.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/spendlens/dist/spendlens.umd.min.js"></script>
 <script>
   const stats = TokenLens.getStats("Hello, world!", { model: "gpt-4o" });
   console.log(stats.tokens, TokenLens.formatCost(stats.inputCost));
@@ -112,10 +112,10 @@ const stats = getStats(text, {
 
 ---
 
-## React (`@tokenlens/react`)
+## React (`@spendlens/react`)
 
 ```bash
-npm install @tokenlens/react
+npm install @spendlens/react
 ```
 
 ### Hooks
@@ -130,7 +130,7 @@ import {
   useModelList,
   TokenCounter,
   TokenLensProvider,
-} from "@tokenlens/react";
+} from "@spendlens/react";
 ```
 
 **`useTokenLens`** — primary hook, synchronous, memoised:
@@ -194,7 +194,7 @@ The extension injects a live counter widget on AI sites. It appears when you sta
 
 ### Install (Chrome / Chromium)
 
-1. Download `tokenlens-extension.zip` from [Releases](https://github.com/boyzliberty360/tokenlens/releases)
+1. Download `spendlens-extension.zip` from [Releases](https://github.com/boyzliberty360/spendlens/releases)
 2. Unzip it
 3. Go to `chrome://extensions`
 4. Enable **Developer mode** (top right)
@@ -240,8 +240,8 @@ Click **Settings** for:
 ## Development
 
 ```bash
-git clone https://github.com/boyzliberty360/tokenlens
-cd tokenlens
+git clone https://github.com/boyzliberty360/spendlens
+cd spendlens
 npm install
 
 # Build everything
@@ -262,15 +262,15 @@ npm run dev -w packages/core
 ### Repo structure
 
 ```
-tokenlens/
+spendlens/
 ├── packages/
-│   ├── core/                  # tokenlens npm package
+│   ├── core/                  # spendlens npm package
 │   │   ├── src/
 │   │   │   ├── index.ts       # full library
 │   │   │   └── __tests__/     # 47 unit tests
 │   │   └── tsup.config.ts     # builds ESM + CJS + UMD
 │   │
-│   ├── react/                 # @tokenlens/react
+│   ├── react/                 # @spendlens/react
 │   │   └── src/
 │   │       └── index.tsx      # hooks + TokenCounter + Provider
 │   │

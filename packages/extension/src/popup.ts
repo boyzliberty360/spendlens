@@ -1,4 +1,4 @@
-import { MODELS, formatCost } from "tokenlens";
+import { MODELS, formatCost } from "spendlens";
 
 // ── Populate model dropdown ───────────────────────────────────────────────────
 const modelSelect = document.getElementById("model-select") as HTMLSelectElement;

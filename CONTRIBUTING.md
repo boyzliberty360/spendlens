@@ -1,14 +1,14 @@
 # Contributing to TokenLens
 
-Thanks for wanting to contribute. This is a monorepo with three packages — `tokenlens` (core), `@tokenlens/react`, and the browser extension. Below is everything you need to get started.
+Thanks for wanting to contribute. This is a monorepo with three packages — `spendlens` (core), `@spendlens/react`, and the browser extension. Below is everything you need to get started.
 
 ---
 
 ## Getting started
 
 ```bash
-git clone https://github.com/boyzliberty360/tokenlens
-cd tokenlens
+git clone https://github.com/boyzliberty360/spendlens
+cd spendlens
 npm install
 npm run build   # build all packages
 npm run test -w packages/core   # run unit tests

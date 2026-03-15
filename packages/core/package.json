@@ -1,18 +1,26 @@
 {
-  "name": "tokenlens",
-  "version": "1.0.0",
+  "name": "spendlens",
+  "version": "1.0.1",
   "description": "Real-time token counting and cost estimation for LLM prompts — before you hit send.",
   "keywords": [
-    "tokens", "llm", "openai", "anthropic", "claude", "gpt",
-    "cost", "estimation", "prompt", "tokenizer"
+    "tokens",
+    "llm",
+    "openai",
+    "anthropic",
+    "claude",
+    "gpt",
+    "cost",
+    "estimation",
+    "prompt",
+    "tokenizer"
   ],
   "author": "Orion",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/boyzliberty360/tokenlens"
+    "url": "https://github.com/boyzliberty360/spendlens"
   },
-  "homepage": "https://github.com/boyzliberty360/tokenlens#readme",
+  "homepage": "https://github.com/boyzliberty360/spendlens#readme",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -23,7 +31,11 @@
       "require": "./dist/index.js"
     }
   },
-  "files": ["dist", "README.md", "LICENSE"],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",

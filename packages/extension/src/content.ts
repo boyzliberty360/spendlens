@@ -4,7 +4,7 @@ import {
   getContextSeverity,
   MODELS,
   type ModelConfig,
-} from "tokenlens";
+} from "spendlens";
 
 // ── Site-specific selectors ───────────────────────────────────────────────────
 
@@ -149,7 +149,7 @@ let settings: ExtensionSettings = {
 function createWidget(): HTMLElement {
   const wrap = document.createElement("div");
   wrap.id = "tl-widget";
-  wrap.setAttribute("data-tokenlens", "true");
+  wrap.setAttribute("data-spendlens", "true");
 
   const isDark =
     settings.theme === "dark" ||
