@@ -1,4 +1,4 @@
-# TokenLens
+# SpendLens
 
 > See token count and cost **before** you hit send.
 
@@ -61,8 +61,8 @@ textarea.addEventListener("input", (e) => {
 ```html
 <script src="https://cdn.jsdelivr.net/npm/spendlens/dist/spendlens.umd.min.js"></script>
 <script>
-  const stats = TokenLens.getStats("Hello, world!", { model: "gpt-4o" });
-  console.log(stats.tokens, TokenLens.formatCost(stats.inputCost));
+  const stats = SpendLens.getStats("Hello, world!", { model: "gpt-4o" });
+  console.log(stats.tokens, SpendLens.formatCost(stats.inputCost));
 </script>
 ```
 
@@ -208,7 +208,7 @@ The extension injects a live counter widget on AI sites. It appears when you sta
 
 ### Settings
 
-Click the TokenLens icon in your toolbar to:
+Click the SpendLens icon in your toolbar to:
 - Toggle the counter on/off
 - Switch the active model (affects cost estimates)
 
