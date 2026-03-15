@@ -1,17 +1,14 @@
 {
   "manifest_version": 3,
-  "name": "TokenLens",
+  "name": "SpendLens",
   "version": "1.0.0",
   "description": "See token count and cost before you send your AI prompt.",
   "icons": {
-    "16":  "icons/icon16.png",
-    "48":  "icons/icon48.png",
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
     "128": "icons/icon128.png"
   },
-  "permissions": [
-    "storage",
-    "activeTab"
-  ],
+  "permissions": ["storage", "activeTab"],
   "host_permissions": [
     "https://claude.ai/*",
     "https://chat.openai.com/*",
@@ -37,14 +34,25 @@
     }
   ],
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "background.js",
+    "scripts": ["background.js"]
   },
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
-      "16":  "icons/icon16.png",
-      "48":  "icons/icon48.png"
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png"
     }
   },
-  "options_page": "options.html"
+  "options_page": "options.html",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "spendlens@boyzliberty360",
+      "strict_min_version": "142.0",
+      "data_collection_permissions": {
+        "required": ["none"],
+        "optional": []
+      }
+    }
+  }
 }
